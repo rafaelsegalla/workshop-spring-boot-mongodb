@@ -2,6 +2,7 @@ package com.rafaelsegalla.workshopspringbootmongodb.config;
 
 import com.rafaelsegalla.workshopspringbootmongodb.domain.Post;
 import com.rafaelsegalla.workshopspringbootmongodb.domain.User;
+import com.rafaelsegalla.workshopspringbootmongodb.dto.AuthorDTO;
 import com.rafaelsegalla.workshopspringbootmongodb.repository.PostRepository;
 import com.rafaelsegalla.workshopspringbootmongodb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class Instantiation implements CommandLineRunner {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        Post post1 = new Post(null, simpleDateFormat.parse("11/06/2022"), "Good Morning!", "I woke up tired today", maria);
-        Post post2 = new Post(null, simpleDateFormat.parse("24/07/2022"), "I'm leaving", "Goodbye", alex);
-        Post post3 = new Post(null, simpleDateFormat.parse("16/08/2022"), "Good Morning", "Good coffee", bob);
+        Post post1 = new Post(null, simpleDateFormat.parse("11/06/2022"), "Good Morning!", "I woke up tired today", new AuthorDTO(maria));
+        Post post2 = new Post(null, simpleDateFormat.parse("24/07/2022"), "I'm leaving", "Goodbye", new AuthorDTO(alex));
+        Post post3 = new Post(null, simpleDateFormat.parse("16/08/2022"), "Good Morning", "Good coffee", new AuthorDTO(bob));
         this.postRepository.saveAll(Arrays.asList(post1, post2, post3));
 
     }
