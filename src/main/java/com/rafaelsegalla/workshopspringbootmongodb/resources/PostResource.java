@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,17 @@ public class PostResource {
     public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
         text = URL.decodeParams(text);
         List<Post> postList = postService.findByTitle(text);
+        return ResponseEntity.ok().body(postList);
+    }
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Post>> filter(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(value = "minDate", defaultValue = "") String minDateString,
+            @RequestParam(value = "maxDate", defaultValue = "") String maxDateString) {
+        text = URL.decodeParams(text);
+        Date minDate = URL.convertDate(minDateString, new Date(0L));
+        Date maxDate = URL.convertDate(maxDateString, new Date());
+        List<Post> postList = postService.filter(text, minDate, maxDate);
         return ResponseEntity.ok().body(postList);
     }
 }
