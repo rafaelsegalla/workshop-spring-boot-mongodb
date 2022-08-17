@@ -1,6 +1,7 @@
 package com.rafaelsegalla.workshopspringbootmongodb.services;
 
 import com.rafaelsegalla.workshopspringbootmongodb.domain.User;
+import com.rafaelsegalla.workshopspringbootmongodb.dto.UserDTO;
 import com.rafaelsegalla.workshopspringbootmongodb.repository.UserRepository;
 import com.rafaelsegalla.workshopspringbootmongodb.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,13 @@ public class UserService {
         }
 
         return user.get();
+    }
+
+    public User insert(User user) {
+       return this.userRepository.insert(user);
+    }
+
+    public User fromDTO(UserDTO user) {
+        return new User(user.getId(), user.getName(), user.getEmail());
     }
 }

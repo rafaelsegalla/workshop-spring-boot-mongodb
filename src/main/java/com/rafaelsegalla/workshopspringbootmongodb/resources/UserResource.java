@@ -4,11 +4,9 @@ import com.rafaelsegalla.workshopspringbootmongodb.domain.User;
 import com.rafaelsegalla.workshopspringbootmongodb.dto.UserDTO;
 import com.rafaelsegalla.workshopspringbootmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +29,12 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User user = this.userService.findById(id);
         return ResponseEntity.ok().body(new UserDTO(user));
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO) {
+        User user = this.userService.fromDTO(userDTO);
+        user = this.userService.insert(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDTO(user));
     }
 }
