@@ -31,7 +31,6 @@ public class Instantiation implements CommandLineRunner {
         User bob = new User(null, "Bob", "bob@gmail.com");
         this.userRepository.saveAll(Arrays.asList(maria, alex, bob));
 
-
         this.postRepository.deleteAll();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -41,9 +40,7 @@ public class Instantiation implements CommandLineRunner {
         Post post3 = new Post(null, simpleDateFormat.parse("16/08/2022"), "Good Morning", "Good coffee", new AuthorDTO(bob));
         this.postRepository.saveAll(Arrays.asList(post1, post2, post3));
 
-    }
-
-    private void createPosts() throws Exception {
-
+        maria.getPosts().add(post1);
+        this.userRepository.save(maria);
     }
 }
