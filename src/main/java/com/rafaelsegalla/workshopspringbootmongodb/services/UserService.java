@@ -34,6 +34,22 @@ public class UserService {
        return this.userRepository.insert(user);
     }
 
+    public void delete(String id) {
+        this.findById(id);
+        this.userRepository.deleteById(id);
+    }
+
+    public User update(User user) {
+        User originalUser = this.findById(user.getId());
+        this.updateData(originalUser, user);
+        return this.userRepository.save(originalUser);
+    }
+
+    private void updateData(User originalUser, User user) {
+        originalUser.setName(user.getName())
+                .setEmail(user.getEmail());
+    }
+
     public User fromDTO(UserDTO user) {
         return new User(user.getId(), user.getName(), user.getEmail());
     }
